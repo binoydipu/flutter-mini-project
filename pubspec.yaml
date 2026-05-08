@@ -1,0 +1,48 @@
+name: mini_project
+description: "A beginner-friendly Flutter mini project for learning Supabase authentication."
+
+# Prevents accidental publishing to pub.dev
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.4
+
+# ──────────────────────────────────────────────────
+# DEPENDENCIES - packages our app needs to run
+# ──────────────────────────────────────────────────
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Material Design icons for iOS-style icons
+  cupertino_icons: ^1.0.9
+
+  # Supabase Flutter SDK - handles auth, database, storage
+  supabase_flutter: ^2.12.4
+
+  # GoRouter - declarative routing for navigation
+  go_router: ^17.2.3
+
+  # Google Sign In - native Google OAuth flow
+  google_sign_in: ^7.2.0
+
+  # Read .env file for Supabase keys (keeps secrets out of code)
+  flutter_dotenv: ^6.0.1
+
+  # To show Loading indicators
+  flutter_spinkit: ^5.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Load the .env file as an asset so flutter_dotenv can read it
+  assets:
+    - .env
