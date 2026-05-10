@@ -19,6 +19,10 @@ class AppConstants {
   static const String roleDoctor = 'Doctor';
   static const String roleUser = 'User';
 
+  // ── Admin Role ──
+  // This role is not selectable by users. It's assigned manually in the database.
+  static const String roleAdmin = 'Admin';
+
   // ── Supabase Table Names ──
   // The name of our profiles table in Supabase.
   static const String profilesTable = 'profiles';

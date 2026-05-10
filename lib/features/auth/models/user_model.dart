@@ -28,7 +28,7 @@ class UserModel {
   /// The user's email address
   final String email;
 
-  /// The user's role — either "Doctor" or "User"
+  /// The user's role — either "Admin", "Doctor" or "User"
   final String role;
 
   /// When the profile was first created
@@ -103,6 +103,9 @@ class UserModel {
 
   /// Returns true if the user is a doctor.
   bool get isDoctor => role == 'Doctor';
+
+  /// Returns true if the user is an admin.
+  bool get isAdmin => role == 'Admin';
 
   /// Returns a nicely formatted "Member Since" string.
   String get formattedCreatedAt => _formatDate(createdAt);

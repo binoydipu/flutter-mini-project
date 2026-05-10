@@ -27,6 +27,13 @@ import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/home/screens/appointments_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
+import '../../features/admin/screens/admin_dashboard_screen.dart';
+import '../../features/admin/screens/add_doctor_screen.dart';
+import '../../features/admin/screens/add_hospital_screen.dart';
+import '../../features/admin/screens/add_speciality_screen.dart';
+import '../../features/admin/screens/add_symptom_screen.dart';
+import '../../features/healthcare/screens/doctors_screen.dart';
+import '../../features/healthcare/screens/hospitals_screen.dart';
 import '../../shared/main_shell.dart';
 import '../constants/app_constants.dart';
 
@@ -71,6 +78,38 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppConstants.registerPath,
       builder: (context, state) => const RegisterScreen(),
+    ),
+
+    // ── Admin Routes ──
+    GoRoute(
+      path: '/admin',
+      builder: (context, state) => const AdminDashboardScreen(),
+    ),
+    GoRoute(
+      path: '/admin/add-doctor',
+      builder: (context, state) => const AddDoctorScreen(),
+    ),
+    GoRoute(
+      path: '/admin/add-hospital',
+      builder: (context, state) => const AddHospitalScreen(),
+    ),
+    GoRoute(
+      path: '/admin/add-speciality',
+      builder: (context, state) => const AddSpecialityScreen(),
+    ),
+    GoRoute(
+      path: '/admin/add-symptom',
+      builder: (context, state) => const AddSymptomScreen(),
+    ),
+
+    // ── Healthcare Routes ──
+    GoRoute(
+      path: '/doctors',
+      builder: (context, state) => const DoctorsScreen(),
+    ),
+    GoRoute(
+      path: '/hospitals',
+      builder: (context, state) => const HospitalsScreen(),
     ),
 
     // ── Main Shell (Bottom Navigation) ──

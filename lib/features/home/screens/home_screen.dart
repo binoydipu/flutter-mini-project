@@ -10,6 +10,7 @@
 // ============================================================
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../auth/models/user_model.dart';
@@ -158,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Builds a grid of quick action cards.
   Widget _buildActionCards() {
-    // Define the action card data
     final actions = [
       _ActionItem(
         icon: Icons.calendar_month_rounded,
@@ -169,18 +169,24 @@ class _HomeScreenState extends State<HomeScreen> {
         icon: Icons.people_rounded,
         title: 'View\nDoctors',
         color: const Color(0xFF7C3AED),
+        route: '/doctors',
       ),
       _ActionItem(
-        icon: Icons.favorite_rounded,
-        title: 'Health\nTips',
+        icon: Icons.local_hospital_rounded,
+        title: 'Partner\nHospitals',
         color: const Color(0xFFEC4899),
-      ),
-      _ActionItem(
-        icon: Icons.history_rounded,
-        title: 'Medical\nHistory',
-        color: const Color(0xFF059669),
+        route: '/hospitals',
       ),
     ];
+
+    if (_profile?.isAdmin == true) {
+      actions.add(_ActionItem(
+        icon: Icons.admin_panel_settings_rounded,
+        title: 'Admin\nPanel',
+        color: const Color(0xFF059669),
+        route: '/admin',
+      ));
+    }
 
     // Build a 2-column grid
     return GridView.builder(
@@ -208,16 +214,18 @@ class _HomeScreenState extends State<HomeScreen> {
         // Rounded corners on the tap ripple
         borderRadius: BorderRadius.circular(16),
         onTap: () {
-          // TODO: Navigate to the relevant screen
-          // For now, show a snackbar
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                '${action.title.replaceAll('\n', ' ')} — Coming soon!',
+          if (action.route != null) {
+            context.push(action.route!);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '${action.title.replaceAll('\n', ' ')} — Coming soon!',
+                ),
+                duration: const Duration(seconds: 1),
               ),
-              duration: const Duration(seconds: 1),
-            ),
-          );
+            );
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -260,6 +268,7 @@ class _ActionItem {
   final IconData icon;
   final String title;
   final Color color;
+  final String? route;
 
-  _ActionItem({required this.icon, required this.title, required this.color});
+  _ActionItem({required this.icon, required this.title, required this.color, this.route});
 }
