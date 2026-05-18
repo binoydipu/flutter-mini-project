@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         // Navigate to login so they can sign in
         // (Supabase may require email verification first)
-        context.go(AppConstants.loginPath);
+        context.go('/login');
       }
     } catch (e) {
       // Step 5: Show error if registration fails
@@ -137,7 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
 
       // Navigate to the main app
-      if (mounted) context.go(AppConstants.homePath);
+      if (mounted) context.go('/home');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          onPressed: () => context.go(AppConstants.loginPath),
+          onPressed: () => context.go('/login'),
         ),
       ),
       body: SafeArea(
@@ -357,7 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         TextButton(
           // Navigate back to the Login screen
-          onPressed: () => context.go(AppConstants.loginPath),
+          onPressed: () => context.go('/login'),
           child: const Text('Login'),
         ),
       ],

@@ -12,8 +12,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../auth/models/user_model.dart';
 import '../../auth/services/auth_service.dart';
@@ -83,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         await AuthService.signOut();
 
         // Navigate to login screen (replace the entire navigation stack)
-        if (mounted) context.go(AppConstants.loginPath);
+        if (mounted) context.go('/login');
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -106,6 +104,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'Profile',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit_outlined),
+            onPressed: () async {
+              final result = await context.push('/profile/update');
+              if (result == true) {
+                // Refresh profile if it was updated
+                setState(() => _isLoading = true);
+                _loadProfile();
+              }
+            },
+          ),
+        ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

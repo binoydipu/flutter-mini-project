@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       // Step 4: Navigate to the main app on success
-      if (mounted) context.go(AppConstants.homePath);
+      if (mounted) context.go('/home');
     } catch (e) {
       // Step 5: Show error message if login fails
       if (mounted) {
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       // Navigate to the main app
-      if (mounted) context.go(AppConstants.homePath);
+      if (mounted) context.go('/home');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -307,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         TextButton(
           // Navigate to the Register screen
-          onPressed: () => context.go(AppConstants.registerPath),
+          onPressed: () => context.go('/register'),
           child: const Text('Register'),
         ),
       ],

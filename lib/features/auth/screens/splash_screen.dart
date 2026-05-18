@@ -46,10 +46,10 @@ class _SplashScreenState extends State<SplashScreen> {
     // Check if a user is currently logged in
     if (AuthService.isLoggedIn()) {
       // User IS logged in → go to home
-      context.go(AppConstants.homePath);
+      context.go('/home');
     } else {
       // User is NOT logged in → go to login screen
-      context.go(AppConstants.loginPath);
+      context.go('/login');
     }
   }
 

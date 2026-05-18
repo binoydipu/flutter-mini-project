@@ -27,6 +27,7 @@ import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/home/screens/appointments_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
+import '../../features/profile/screens/update_profile_screen.dart';
 import '../../features/admin/screens/admin_dashboard_screen.dart';
 import '../../features/admin/screens/add_doctor_screen.dart';
 import '../../features/admin/screens/add_hospital_screen.dart';
@@ -35,13 +36,12 @@ import '../../features/admin/screens/add_symptom_screen.dart';
 import '../../features/healthcare/screens/doctors_screen.dart';
 import '../../features/healthcare/screens/hospitals_screen.dart';
 import '../../shared/main_shell.dart';
-import '../constants/app_constants.dart';
 
 /// The global GoRouter instance used by MaterialApp.router.
 /// This defines ALL the routes in the app.
 final GoRouter appRouter = GoRouter(
   // The initial route when the app starts
-  initialLocation: AppConstants.splashPath,
+  initialLocation: '/',
 
   // ── Redirect Logic ──
   // This runs BEFORE every navigation to check conditions.
@@ -64,19 +64,19 @@ final GoRouter appRouter = GoRouter(
     // The first screen shown. It checks if the user is logged in
     // and redirects to /shell or /login accordingly.
     GoRoute(
-      path: AppConstants.splashPath,
+      path: '/',
       builder: (context, state) => const SplashScreen(),
     ),
 
     // ── Login Screen ──
     GoRoute(
-      path: AppConstants.loginPath,
+      path: '/login',
       builder: (context, state) => const LoginScreen(),
     ),
 
     // ── Register Screen ──
     GoRoute(
-      path: AppConstants.registerPath,
+      path: '/register',
       builder: (context, state) => const RegisterScreen(),
     ),
 
@@ -130,6 +130,12 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const ProfileScreen(),
         ),
       ],
+    ),
+
+    // ── Profile Routes ──
+    GoRoute(
+      path: '/profile/update',
+      builder: (context, state) => const UpdateProfileScreen(),
     ),
   ],
 );

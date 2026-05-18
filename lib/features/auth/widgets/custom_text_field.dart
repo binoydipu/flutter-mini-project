@@ -47,6 +47,8 @@ class CustomTextField extends StatelessWidget {
   // Widget shown at the end of the field (e.g., show/hide password button)
   final Widget? suffixIcon;
 
+  final bool? enabled;
+
   const CustomTextField({
     super.key,
     required this.controller,
@@ -57,6 +59,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.validator,
     this.suffixIcon,
+    this.enabled = true,
   });
 
   @override
@@ -73,6 +76,8 @@ class CustomTextField extends StatelessWidget {
 
       // Validation function called when form is submitted
       validator: validator,
+
+      enabled: enabled,
 
       // Visual decoration of the field
       decoration: InputDecoration(

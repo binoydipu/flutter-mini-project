@@ -259,4 +259,20 @@ class AuthService {
       return null;
     }
   }
+  // ──────────────────────────────────────────────
+  // UPDATE USER PROFILE IN DATABASE
+  // ──────────────────────────────────────────────
+
+  /// Updates the user's profile in the "profiles" table.
+  /// Currently only updates the full name.
+  static Future<void> updateUserProfile({
+    required String fullName,
+  }) async {
+    final user = getCurrentUser();
+    if (user == null) throw Exception('No user logged in.');
+
+    await supabase.from(AppConstants.profilesTable).update({
+      'full_name': fullName,
+    }).eq('id', user.id);
+  }
 }

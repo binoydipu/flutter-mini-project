@@ -29,13 +29,4 @@ class AppConstants {
 
   // ── Validation Rules ──
   static const int passwordMinLength = 6;
-
-  // ── Route Paths ──
-  // Centralized route paths so we don't use raw strings everywhere.
-  static const String splashPath = '/';
-  static const String loginPath = '/login';
-  static const String registerPath = '/register';
-  static const String homePath = '/home';
-  static const String appointmentsPath = '/appointments';
-  static const String profilePath = '/profile';
 }
