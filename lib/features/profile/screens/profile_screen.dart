@@ -12,6 +12,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mini_project/features/profile/services/profile_service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/user_model.dart';
 import '../../auth/services/auth_service.dart';
@@ -38,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   /// Loads the user's profile from Supabase.
   Future<void> _loadProfile() async {
-    final profile = await AuthService.getUserProfile();
+    final profile = await ProfileService.getUserProfile();
     if (mounted) {
       setState(() {
         _profile = profile;
@@ -55,9 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -197,21 +196,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // Use the helper getter from UserModel for the initial
     final initial = _profile?.initial ?? 'U';
     final role = _profile?.role ?? 'User';
+    final avatarUrl = _profile?.avatarUrl;
 
     return Column(
       children: [
-        // Circular avatar with the user's first initial
         CircleAvatar(
           radius: 50,
           backgroundColor: AppTheme.primaryColor,
-          child: Text(
-            initial,
-            style: const TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-          ),
+          backgroundImage: avatarUrl != null ? NetworkImage(avatarUrl) : null,
+          child: avatarUrl == null
+              ? Text(
+                  initial,
+                  style: const TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                )
+              : null,
         ),
         const SizedBox(height: 16),
 

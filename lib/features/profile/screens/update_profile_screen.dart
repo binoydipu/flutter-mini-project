@@ -8,12 +8,15 @@
 //   • Saves only Full Name to Supabase (others are UI only for now)
 // ============================================================
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mini_project/features/profile/services/profile_service.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/user_model.dart';
-import '../../auth/services/auth_service.dart';
 import '../../auth/services/auth_validators.dart';
 import '../../auth/widgets/custom_text_field.dart';
 
@@ -28,6 +31,8 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   // ── Form Key ──
   final _formKey = GlobalKey<FormState>();
+
+  File? _selectedImage;
 
   // ── Text Controllers ──
   final _nameController = TextEditingController();
@@ -60,7 +65,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   /// Loads the user's profile from Supabase to pre-fill the form.
   Future<void> _loadProfile() async {
     setState(() => _isLoading = true);
-    final profile = await AuthService.getUserProfile();
+    final profile = await ProfileService.getUserProfile();
 
     if (mounted && profile != null) {
       setState(() {
@@ -74,6 +79,20 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     }
   }
 
+  void _pickImage() async {
+    FilePickerResult? result = await FilePicker.pickFiles(
+      type: FileType.image,
+      allowMultiple: false,
+    );
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        _selectedImage = file;
+      });
+    }
+  }
+
   /// Called when the user taps "Save Changes".
   Future<void> _handleSave() async {
     // Validate form fields
@@ -83,8 +102,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     try {
       // Save only the full name to Supabase
-      await AuthService.updateUserProfile(
+      await ProfileService.updateUserProfile(
         fullName: _nameController.text.trim(),
+        avatarFile: _selectedImage,
       );
 
       if (mounted) {
@@ -130,7 +150,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // ── Avatar Placeholder ──
-                    Center(child: _buildAvatarEditor()),
+                    Center(child: _buildAvatarEditor(_selectedImage)),
                     const SizedBox(height: 32),
 
                     // ── Full Name ──
@@ -207,41 +227,47 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   // ──────────────────────────────────────────────
 
   /// Builds a visual-only avatar editor widget.
-  Widget _buildAvatarEditor() {
+  Widget _buildAvatarEditor(File? avatarFile) {
     final initial = _profile?.initial ?? 'U';
 
-    return Stack(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: AppTheme.primaryColor.withValues(alpha: 0.1),
-          child: Text(
-            initial,
-            style: const TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.w700,
-              color: AppTheme.primaryColor,
+    return GestureDetector(
+      onTap: _pickImage,
+      child: Stack(
+        children: [
+          CircleAvatar(
+            radius: 75,
+            backgroundColor: AppTheme.primaryColor.withValues(alpha: 0.1),
+            backgroundImage: avatarFile != null ? FileImage(avatarFile) : null,
+            child: avatarFile == null
+                ? Text(
+                    initial,
+                    style: const TextStyle(
+                      fontSize: 46,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.primaryColor,
+                    ),
+                  )
+                : null,
+          ),
+          Positioned(
+            bottom: 5,
+            right: 5,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: AppTheme.primaryColor,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+              child: const Icon(
+                Icons.camera_alt_outlined,
+                size: 20,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: AppTheme.primaryColor,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2),
-            ),
-            child: const Icon(
-              Icons.camera_alt_outlined,
-              size: 20,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

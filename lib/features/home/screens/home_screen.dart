@@ -11,10 +11,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mini_project/features/profile/services/profile_service.dart';
 
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/user_model.dart';
-import '../../auth/services/auth_service.dart';
 
 /// HomeScreen — the main dashboard tab.
 class HomeScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   /// Fetches the user's profile from the Supabase "profiles" table.
   Future<void> _loadProfile() async {
-    final profile = await AuthService.getUserProfile();
+    final profile = await ProfileService.getUserProfile();
     if (mounted) {
       setState(() {
         _profile = profile;

@@ -11,6 +11,7 @@ This project is created for **learning and practicing Flutter development**. It 
 - Feature-based project structure
 - Environment configuration with flutter_dotenv
 
+
 ## 📦 What's Inside
 
 ### Features
@@ -48,8 +49,7 @@ This project is created for **learning and practicing Flutter development**. It 
    - Create a `.env` file in the project root
    - Add your Supabase URL and API key:
      ```
-     SUPABASE_URL=your_supabase_url
-     SUPABASE_ANON_KEY=your_supabase_anon_key
+     see .env.example for reference
      ```
 
 4. **Run the app**

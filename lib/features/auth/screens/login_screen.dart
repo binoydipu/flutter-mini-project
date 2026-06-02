@@ -14,6 +14,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mini_project/features/profile/services/profile_service.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_theme.dart';
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Check if the user has a profile already
       // (first-time Google users won't have one)
       if (response.user != null) {
-        final profile = await AuthService.getUserProfile();
+        final profile = await ProfileService.getUserProfile();
 
         // If no profile exists, create one with Google's info
         if (profile == null) {

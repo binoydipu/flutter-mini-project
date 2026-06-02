@@ -31,6 +31,9 @@ class UserModel {
   /// The user's role — either "Admin", "Doctor" or "User"
   final String role;
 
+  /// The URL of the user's avatar image (optional)
+  final String? avatarUrl;
+
   /// When the profile was first created
   final DateTime? createdAt;
 
@@ -44,6 +47,7 @@ class UserModel {
     required this.fullName,
     required this.email,
     required this.role,
+    this.avatarUrl,
     this.createdAt,
     this.updatedAt,
   });
@@ -65,6 +69,7 @@ class UserModel {
       fullName: map['full_name'] as String? ?? '',
       email: map['email'] as String? ?? '',
       role: map['role'] as String? ?? 'User',
+      avatarUrl: map['avatar_url'] as String?,
       // Parse the date strings into DateTime objects
       // tryParse returns null if the string is invalid
       createdAt: map['created_at'] != null
@@ -90,6 +95,7 @@ class UserModel {
       'full_name': fullName,
       'email': email,
       'role': role,
+      'avatar_url': avatarUrl,
       'created_at': createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
     };
   }
