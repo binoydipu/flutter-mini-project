@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../healthcare/models/speciality_model.dart';
+import '../../../core/models/speciality_model.dart';
 import '../services/admin_service.dart';
 
 class AddSpecialityScreen extends StatefulWidget {

@@ -26,7 +26,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../../main.dart'; // For the global `supabase` variable
 import '../../../core/constants/app_constants.dart';
-import '../models/user_model.dart';
+import '../../../core/models/user_model.dart';
 
 /// AuthService — a simple class that wraps Supabase auth methods.
 /// All methods are static, so you don't need to create an instance.

@@ -6,8 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/app_theme.dart';
-import '../../healthcare/models/hospital_model.dart';
+import '../../../core/models/hospital_model.dart';
 import '../services/admin_service.dart';
 
 class AddHospitalScreen extends StatefulWidget {

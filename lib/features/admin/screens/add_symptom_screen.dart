@@ -6,8 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../healthcare/models/speciality_model.dart';
-import '../../healthcare/models/symptom_model.dart';
+import '../../../core/models/speciality_model.dart';
+import '../../../core/models/symptom_model.dart';
 import '../../healthcare/services/healthcare_service.dart';
 import '../services/admin_service.dart';
 

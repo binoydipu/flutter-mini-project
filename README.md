@@ -35,8 +35,8 @@ This project is created for **learning and practicing Flutter development**. It 
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd mini_project
+   git clone https://github.com/binoydipu/flutter-mini-project
+   cd flutter-mini-project
    ```
 
 2. **Install dependencies**

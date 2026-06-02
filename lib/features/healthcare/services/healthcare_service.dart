@@ -5,10 +5,10 @@
 // ============================================================
 
 import 'package:mini_project/main.dart' show supabase;
-import '../models/doctor_model.dart';
-import '../models/hospital_model.dart';
-import '../models/speciality_model.dart';
-import '../models/symptom_model.dart';
+import '../../../core/models/doctor_model.dart';
+import '../../../core/models/hospital_model.dart';
+import '../../../core/models/speciality_model.dart';
+import '../../../core/models/symptom_model.dart';
 
 class HealthcareService {
   /// Fetches all active doctors

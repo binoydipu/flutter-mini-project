@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../healthcare/models/hospital_model.dart';
+import '../../../core/models/hospital_model.dart';
 import '../../healthcare/services/healthcare_service.dart';
 
 class HospitalsScreen extends StatefulWidget {

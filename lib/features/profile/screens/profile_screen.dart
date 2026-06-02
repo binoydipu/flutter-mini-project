@@ -13,7 +13,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../auth/models/user_model.dart';
+import '../../../core/models/user_model.dart';
 import '../../auth/services/auth_service.dart';
 
 /// ProfileScreen — shows user info and logout button.

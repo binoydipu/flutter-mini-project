@@ -5,10 +5,10 @@
 // ============================================================
 
 import 'package:mini_project/main.dart';
-import '../../healthcare/models/doctor_model.dart';
-import '../../healthcare/models/hospital_model.dart';
-import '../../healthcare/models/speciality_model.dart';
-import '../../healthcare/models/symptom_model.dart';
+import '../../../core/models/doctor_model.dart';
+import '../../../core/models/hospital_model.dart';
+import '../../../core/models/speciality_model.dart';
+import '../../../core/models/symptom_model.dart';
 
 class AdminService {
 
