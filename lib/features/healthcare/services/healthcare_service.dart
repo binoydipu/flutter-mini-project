@@ -4,6 +4,7 @@
 // Fetches data for the healthcare application.
 // ============================================================
 
+import 'package:flutter/material.dart';
 import 'package:mini_project/main.dart' show supabase;
 import '../../../core/models/doctor_model.dart';
 import '../../../core/models/hospital_model.dart';
@@ -22,7 +23,7 @@ class HealthcareService {
 
       return (response as List).map((e) => DoctorModel.fromMap(e)).toList();
     } catch (e) {
-      print('Error fetching doctors: $e');
+      debugPrint('Error fetching doctors: $e');
       return [];
     }
   }
@@ -38,7 +39,7 @@ class HealthcareService {
 
       return (response as List).map((e) => HospitalModel.fromMap(e)).toList();
     } catch (e) {
-      print('Error fetching hospitals: $e');
+      debugPrint('Error fetching hospitals: $e');
       return [];
     }
   }
@@ -53,7 +54,7 @@ class HealthcareService {
 
       return (response as List).map((e) => SpecialityModel.fromMap(e)).toList();
     } catch (e) {
-      print('Error fetching specialities: $e');
+      debugPrint('Error fetching specialities: $e');
       return [];
     }
   }
@@ -68,7 +69,7 @@ class HealthcareService {
 
       return (response as List).map((e) => SymptomModel.fromMap(e)).toList();
     } catch (e) {
-      print('Error fetching symptoms: $e');
+      debugPrint('Error fetching symptoms: $e');
       return [];
     }
   }

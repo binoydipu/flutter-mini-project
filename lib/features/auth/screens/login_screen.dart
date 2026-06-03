@@ -119,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'User',
             email: response.user!.email ?? '',
             role: AppConstants.roleUser, // Default role for Google sign-in
+            avatarUrl: response.user!.userMetadata?['avatar_url'] ?? '',
           );
         }
       }

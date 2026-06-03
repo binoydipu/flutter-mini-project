@@ -14,9 +14,7 @@ class AdminDashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin Dashboard'),
-      ),
+      appBar: AppBar(title: const Text('Admin Dashboard')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -65,8 +63,13 @@ class AdminDashboardScreen extends StatelessWidget {
   }) {
     return Card(
       elevation: 2,
+      shadowColor: Colors.black.withValues(alpha: 0.5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(

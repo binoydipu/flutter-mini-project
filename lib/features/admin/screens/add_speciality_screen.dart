@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/models/speciality_model.dart';
 import '../services/admin_service.dart';
 
 class AddSpecialityScreen extends StatefulWidget {
@@ -27,12 +26,9 @@ class _AddSpecialityScreenState extends State<AddSpecialityScreen> {
 
     setState(() => _isLoading = true);
 
-    final speciality = SpecialityModel(
-      id: 0,
+    final success = await AdminService.addSpeciality(
       name: _nameController.text.trim(),
     );
-
-    final success = await AdminService.addSpeciality(speciality);
 
     if (mounted) {
       setState(() => _isLoading = false);
@@ -40,6 +36,7 @@ class _AddSpecialityScreenState extends State<AddSpecialityScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Speciality added successfully')),
         );
+
         context.pop();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -68,8 +65,11 @@ class _AddSpecialityScreenState extends State<AddSpecialityScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Speciality Name (e.g. Cardiology)'),
-                validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                decoration: const InputDecoration(
+                  labelText: 'Speciality Name (e.g. Cardiology)',
+                ),
+                validator: (val) =>
+                    val == null || val.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 32),
               ElevatedButton(

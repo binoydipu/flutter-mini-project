@@ -199,6 +199,7 @@ class AuthService {
     required String fullName,
     required String email,
     required String role,
+    String avatarUrl = '',
   }) async {
     // NOTE: We don't set created_at or updated_at here.
     //   → created_at has a DEFAULT in the database (set on first insert)
@@ -208,6 +209,7 @@ class AuthService {
       'full_name': fullName,
       'email': email,
       'role': role,
+      'avatar_url': avatarUrl,
     });
   }
 

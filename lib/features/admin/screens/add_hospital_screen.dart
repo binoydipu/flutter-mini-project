@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/models/hospital_model.dart';
 import '../services/admin_service.dart';
 
@@ -23,6 +24,8 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
   final _cityController = TextEditingController();
   final _addressController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _latitudeController = TextEditingController();
+  final _longitudeController = TextEditingController();
 
   bool _isLoading = false;
 
@@ -37,6 +40,8 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
       city: _cityController.text.trim(),
       address: _addressController.text.trim(),
       phone: _phoneController.text.trim(),
+      latitude: double.tryParse(_latitudeController.text.trim()),
+      longitude: double.tryParse(_longitudeController.text.trim()),
     );
 
     final success = await AdminService.addHospital(newHospital);
@@ -49,9 +54,9 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
         );
         context.pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add hospital')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Failed to add hospital')));
       }
     }
   }
@@ -62,7 +67,14 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
     _cityController.dispose();
     _addressController.dispose();
     _phoneController.dispose();
+    _latitudeController.dispose();
+    _longitudeController.dispose();
     super.dispose();
+  }
+
+  Future<void> openGoogleMaps() async {
+    final uri = Uri.parse("https://www.google.com/maps");
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -79,13 +91,15 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Hospital Name'),
-                validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                validator: (val) =>
+                    val == null || val.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _cityController,
                 decoration: const InputDecoration(labelText: 'City'),
-                validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                validator: (val) =>
+                    val == null || val.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -98,6 +112,22 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
                 decoration: const InputDecoration(labelText: 'Phone Number'),
                 keyboardType: TextInputType.phone,
               ),
+              const SizedBox(height: 16),
+
+              TextFormField(
+                controller: _latitudeController,
+                decoration: const InputDecoration(labelText: 'Latitude'),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _longitudeController,
+                decoration: const InputDecoration(labelText: 'Longitude'),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              _builderLocationPicker(),
+
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: _isLoading ? null : _submit,
@@ -108,6 +138,20 @@ class _AddHospitalScreenState extends State<AddHospitalScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _builderLocationPicker() {
+    return OutlinedButton(
+      onPressed: openGoogleMaps,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Open Location on Map'),
+          const SizedBox(width: 8),
+          Icon(Icons.open_in_new_rounded, color: Colors.blue.shade700),
+        ],
       ),
     );
   }

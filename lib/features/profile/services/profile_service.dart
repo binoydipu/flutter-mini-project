@@ -79,4 +79,9 @@ class ProfileService {
         .update(updatedProfile)
         .eq('id', user.id);
   }
+
+  static Future<bool> isAdmin() async {
+    final profile = await ProfileService.getUserProfile();
+    return profile?.role == 'Admin' || profile?.role == 'admin';
+  }
 }

@@ -7,7 +7,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/models/speciality_model.dart';
-import '../../../core/models/symptom_model.dart';
 import '../../healthcare/services/healthcare_service.dart';
 import '../services/admin_service.dart';
 
@@ -24,7 +23,7 @@ class _AddSymptomScreenState extends State<AddSymptomScreen> {
 
   List<SpecialityModel> _specialities = [];
   int? _selectedSpecialityId;
-  
+
   bool _isLoading = false;
   bool _isFetching = true;
 
@@ -49,13 +48,8 @@ class _AddSymptomScreenState extends State<AddSymptomScreen> {
 
     setState(() => _isLoading = true);
 
-    final symptom = SymptomModel(
-      id: 0,
-      name: _nameController.text.trim(),
-    );
-
     final success = await AdminService.addSymptom(
-      symptom: symptom,
+      name: _nameController.text.trim(),
       specialityId: _selectedSpecialityId,
     );
 
@@ -67,9 +61,9 @@ class _AddSymptomScreenState extends State<AddSymptomScreen> {
         );
         context.pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add symptom')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Failed to add symptom')));
       }
     }
   }
@@ -84,7 +78,7 @@ class _AddSymptomScreenState extends State<AddSymptomScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Add Symptom')),
-      body: _isFetching 
+      body: _isFetching
           ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(16),
@@ -95,13 +89,18 @@ class _AddSymptomScreenState extends State<AddSymptomScreen> {
                   children: [
                     TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(labelText: 'Symptom Name (e.g. Headache)'),
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      decoration: const InputDecoration(
+                        labelText: 'Symptom Name (e.g. Headache)',
+                      ),
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<int>(
-                      value: _selectedSpecialityId,
-                      decoration: const InputDecoration(labelText: 'Related Speciality (Optional)'),
+                      initialValue: _selectedSpecialityId,
+                      decoration: const InputDecoration(
+                        labelText: 'Related Speciality (Optional)',
+                      ),
                       items: _specialities.map((spec) {
                         return DropdownMenuItem(
                           value: spec.id,

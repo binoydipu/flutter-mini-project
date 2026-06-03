@@ -133,6 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               'User',
           email: response.user!.email ?? '',
           role: _selectedRole, // Use the role they selected on this screen
+          avatarUrl: response.user!.userMetadata?['avatar_url'] ?? '',
         );
       }
 

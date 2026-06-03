@@ -4,10 +4,10 @@
 // Handles inserting data into the database from the Admin panel.
 // ============================================================
 
+import 'package:flutter/material.dart';
 import 'package:mini_project/main.dart';
 import '../../../core/models/doctor_model.dart';
 import '../../../core/models/hospital_model.dart';
-import '../../../core/models/speciality_model.dart';
 import '../../../core/models/symptom_model.dart';
 
 class AdminService {
@@ -50,7 +50,7 @@ class AdminService {
 
       return true;
     } catch (e) {
-      print('Error adding doctor: $e');
+      debugPrint('Error adding doctor: $e');
       return false;
     }
   }
@@ -65,32 +65,44 @@ class AdminService {
       await supabase.from('hospitals').insert(data);
       return true;
     } catch (e) {
-      print('Error adding hospital: $e');
+      debugPrint('Error adding hospital: $e');
+      return false;
+    }
+  }
+
+  static Future<bool> deleteHospital(int hospitalId) async {
+    try {
+      await supabase.from('hospitals').delete().eq('id', hospitalId);
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting hospital: $e');
       return false;
     }
   }
 
   /// Adds a new speciality
-  static Future<bool> addSpeciality(SpecialityModel speciality) async {
+  static Future<bool> addSpeciality({
+    required String name,
+  }) async {
     try {
-      await supabase.from('specialities').insert(speciality.toMap());
+      await supabase.from('specialities').insert({'name': name});
       return true;
     } catch (e) {
-      print('Error adding speciality: $e');
+      debugPrint('Error adding speciality: $e');
       return false;
     }
   }
 
   /// Adds a new symptom. Optionally links to a speciality.
   static Future<bool> addSymptom({
-    required SymptomModel symptom,
+    required String name,
     int? specialityId,
   }) async {
     try {
       // 1. Insert Symptom
       final symptomResponse = await supabase
           .from('symptoms')
-          .insert(symptom.toMap())
+          .insert({ 'name': name })
           .select('id')
           .single();
 
@@ -107,7 +119,7 @@ class AdminService {
 
       return true;
     } catch (e) {
-      print('Error adding symptom: $e');
+      debugPrint('Error adding symptom: $e');
       return false;
     }
   }

@@ -20,7 +20,10 @@
 // ============================================================
 
 import 'package:go_router/go_router.dart';
+import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
+import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
+import 'package:mini_project/features/profile/services/profile_service.dart';
 import '../../features/auth/screens/splash_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
@@ -50,9 +53,14 @@ final GoRouter appRouter = GoRouter(
 
     bool isLoggedIn = AuthService.isLoggedIn();
     final isAuthRoute = loc == '/login' || loc == '/register';
+    final isAdminRoute = loc.startsWith('/admin');
 
     if (!isLoggedIn && !isAuthRoute) return '/login';
     if (isLoggedIn && isAuthRoute) return '/home';
+
+    ProfileService.isAdmin().then((isAdmin) {
+      if (isLoggedIn && isAdminRoute && !isAdmin) return '/home';
+    });
 
     // No redirect needed — continue to the requested route
     return null;
@@ -110,6 +118,19 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/hospitals',
       builder: (context, state) => const HospitalsScreen(),
+    ),
+    GoRoute(
+      path: '/hospitals/:id',
+      builder: (context, state) {
+        final hospital = state.extra as HospitalModel;
+        return HospitalDetailsScreen(hospital: hospital);
+
+        // final hospitalId = state.pathParameters['id'];
+        // another way is to get hospital id from path parameters: 
+        // and then fetch hospital details inside HospitalDetailsScreen using that id. 
+        // But since we already have the hospital object when navigating,
+        // we can pass it via state.extra to avoid an extra fetch.
+      },
     ),
 
     // ── Main Shell (Bottom Navigation) ──
