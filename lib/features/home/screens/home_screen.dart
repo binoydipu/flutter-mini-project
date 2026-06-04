@@ -166,6 +166,11 @@ class _HomeScreenState extends State<HomeScreen> {
         color: const Color(0xFF2563EB),
       ),
       _ActionItem(
+        icon: Icons.search_rounded,
+        title: 'Search\nDoctors',
+        color: const Color(0xFFDB2777),
+      ),
+      _ActionItem(
         icon: Icons.people_rounded,
         title: 'View\nDoctors',
         color: const Color(0xFF7C3AED),
@@ -180,12 +185,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     if (_profile?.isAdmin == true) {
-      actions.add(_ActionItem(
-        icon: Icons.admin_panel_settings_rounded,
-        title: 'Admin\nPanel',
-        color: const Color(0xFF059669),
-        route: '/admin',
-      ));
+      actions.add(
+        _ActionItem(
+          icon: Icons.admin_panel_settings_rounded,
+          title: 'Admin\nPanel',
+          color: const Color(0xFF059669),
+          route: '/admin',
+        ),
+      );
     }
 
     // Build a 2-column grid
@@ -270,5 +277,10 @@ class _ActionItem {
   final Color color;
   final String? route;
 
-  _ActionItem({required this.icon, required this.title, required this.color, this.route});
+  _ActionItem({
+    required this.icon,
+    required this.title,
+    required this.color,
+    this.route,
+  });
 }

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:mini_project/main.dart';
 import '../../../core/models/doctor_model.dart';
 import '../../../core/models/hospital_model.dart';
-import '../../../core/models/symptom_model.dart';
 
 class AdminService {
 
