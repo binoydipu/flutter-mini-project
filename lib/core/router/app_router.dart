@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
+import 'package:mini_project/features/healthcare/screens/search_doctors_screen.dart';
 import 'package:mini_project/features/profile/services/profile_service.dart';
 import '../../features/auth/screens/splash_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
@@ -140,6 +141,11 @@ final GoRouter appRouter = GoRouter(
 
       routes: [
         GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+
+        GoRoute(
+          path: '/search',
+          builder: (context, state) => const SearchDoctorsScreen(),
+        ),
 
         GoRoute(
           path: '/appointments',

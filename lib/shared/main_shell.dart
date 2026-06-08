@@ -27,6 +27,12 @@ class MainShell extends StatelessWidget {
       label: 'Home',
     ),
     _TabItem(
+      path: '/search',
+      icon: Icons.search,
+      activeIcon: Icons.search,
+      label: 'Search',
+    ),
+    _TabItem(
       path: '/appointments',
       icon: Icons.calendar_today_outlined,
       activeIcon: Icons.calendar_today_rounded,

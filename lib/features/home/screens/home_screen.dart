@@ -166,11 +166,6 @@ class _HomeScreenState extends State<HomeScreen> {
         color: const Color(0xFF2563EB),
       ),
       _ActionItem(
-        icon: Icons.search_rounded,
-        title: 'Search\nDoctors',
-        color: const Color(0xFFDB2777),
-      ),
-      _ActionItem(
         icon: Icons.people_rounded,
         title: 'View\nDoctors',
         color: const Color(0xFF7C3AED),
