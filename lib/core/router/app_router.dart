@@ -21,6 +21,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:mini_project/core/models/hospital_model.dart';
+import 'package:mini_project/core/models/doctor_model.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
 import 'package:mini_project/features/healthcare/screens/search_doctors_screen.dart';
@@ -34,10 +35,12 @@ import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/update_profile_screen.dart';
 import '../../features/admin/screens/admin_dashboard_screen.dart';
 import '../../features/admin/screens/add_doctor_screen.dart';
+import '../../features/admin/screens/edit_doctor_screen.dart';
 import '../../features/admin/screens/add_hospital_screen.dart';
 import '../../features/admin/screens/add_speciality_screen.dart';
 import '../../features/admin/screens/add_symptom_screen.dart';
 import '../../features/healthcare/screens/doctors_screen.dart';
+import '../../features/healthcare/screens/doctor_details_screen.dart';
 import '../../features/healthcare/screens/hospitals_screen.dart';
 import '../../shared/main_shell.dart';
 
@@ -99,6 +102,13 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const AddDoctorScreen(),
     ),
     GoRoute(
+      path: '/admin/edit-doctor',
+      builder: (context, state) {
+        final doctor = state.extra as DoctorModel;
+        return EditDoctorScreen(doctor: doctor);
+      },
+    ),
+    GoRoute(
       path: '/admin/add-hospital',
       builder: (context, state) => const AddHospitalScreen(),
     ),
@@ -115,6 +125,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/doctors',
       builder: (context, state) => const DoctorsScreen(),
+    ),
+    GoRoute(
+      path: '/doctors/:id',
+      builder: (context, state) {
+        final doctor = state.extra as DoctorModel;
+        return DoctorDetailsScreen(doctor: doctor);
+      },
     ),
     GoRoute(
       path: '/hospitals',

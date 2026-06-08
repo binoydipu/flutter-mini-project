@@ -508,19 +508,22 @@ class _SearchDoctorsScreenState extends State<SearchDoctorsScreen> {
                         ),
                         DropdownMenuItem<double>(
                           value: 50.0,
-                          child: Text('< \$50', style: TextStyle(fontSize: 14)),
+                          child: Text(
+                            '< Tk.50',
+                            style: TextStyle(fontSize: 14),
+                          ),
                         ),
                         DropdownMenuItem<double>(
                           value: 100.0,
                           child: Text(
-                            '< \$100',
+                            '< Tk.100',
                             style: TextStyle(fontSize: 14),
                           ),
                         ),
                         DropdownMenuItem<double>(
                           value: 200.0,
                           child: Text(
-                            '< \$200',
+                            '< Tk.200',
                             style: TextStyle(fontSize: 14),
                           ),
                         ),

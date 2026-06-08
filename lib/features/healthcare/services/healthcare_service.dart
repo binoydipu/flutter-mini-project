@@ -166,7 +166,7 @@ class HealthcareService {
             .where((doc) => (doc.experienceYears ?? 0) >= minExperience)
             .toList();
       }
-
+      
       if (maxFee != null) {
         doctors = doctors
             .where((doc) => (doc.consultationFee ?? 0.0) <= maxFee)

@@ -65,18 +65,13 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
     final feeText = _feeController.text.trim();
     final expText = _experienceController.text.trim();
 
-    final doctor = DoctorModel(
-      id: 0,
+    final success = await AdminService.addDoctor(
       fullName: _nameController.text.trim(),
       qualification: _qualificationController.text.trim(),
       designation: _designationController.text.trim(),
       phone: _phoneController.text.trim(),
       experienceYears: expText.isNotEmpty ? int.tryParse(expText) : null,
       consultationFee: feeText.isNotEmpty ? double.tryParse(feeText) : null,
-    );
-
-    final success = await AdminService.addDoctor(
-      doctor: doctor,
       hospitalId: _selectedHospitalId,
       specialityId: _selectedSpecialityId,
     );

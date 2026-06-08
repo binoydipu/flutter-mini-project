@@ -161,8 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildActionCards() {
     final actions = [
       _ActionItem(
-        icon: Icons.calendar_month_rounded,
-        title: 'Book\nAppointment',
+        icon: Icons.local_taxi_rounded,
+        title: 'Ambulance\nBooking',
         color: const Color(0xFF2563EB),
       ),
       _ActionItem(
