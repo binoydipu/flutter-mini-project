@@ -86,6 +86,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // ── Action Cards Grid ──
                     _buildActionCards(),
+
+                    const SizedBox(height: 16),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        context.push('/emergency');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 8,
+                        children: [
+                          Icon(Icons.emergency),
+                          const Text('Emergency'),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

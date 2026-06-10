@@ -24,7 +24,9 @@ import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/core/models/doctor_model.dart';
 import 'package:mini_project/features/admin/screens/edit_hospital_screen.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
+import 'package:mini_project/features/healthcare/screens/emergency_screen.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
+import 'package:mini_project/features/healthcare/screens/nearest_hospitals_screen.dart';
 import 'package:mini_project/features/healthcare/screens/search_doctors_screen.dart';
 import 'package:mini_project/features/profile/services/profile_service.dart';
 import '../../features/auth/screens/splash_screen.dart';
@@ -76,16 +78,10 @@ final GoRouter appRouter = GoRouter(
     // ── Splash Screen ──
     // The first screen shown. It checks if the user is logged in
     // and redirects to /shell or /login accordingly.
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
 
     // ── Login Screen ──
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginScreen(),
-    ),
+    GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
 
     // ── Register Screen ──
     GoRoute(
@@ -152,8 +148,8 @@ final GoRouter appRouter = GoRouter(
         return HospitalDetailsScreen(hospital: hospital);
 
         // final hospitalId = state.pathParameters['id'];
-        // another way is to get hospital id from path parameters: 
-        // and then fetch hospital details inside HospitalDetailsScreen using that id. 
+        // another way is to get hospital id from path parameters:
+        // and then fetch hospital details inside HospitalDetailsScreen using that id.
         // But since we already have the hospital object when navigating,
         // we can pass it via state.extra to avoid an extra fetch.
       },
@@ -188,6 +184,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/profile/update',
       builder: (context, state) => const UpdateProfileScreen(),
+    ),
+    GoRoute(
+      path: '/emergency',
+      builder: (context, state) => const EmergencyScreen(),
+    ),
+    GoRoute(
+      path: '/nearest-hospitals',
+      builder: (context, state) => const NearestHospitalsScreen(),
     ),
   ],
 );
