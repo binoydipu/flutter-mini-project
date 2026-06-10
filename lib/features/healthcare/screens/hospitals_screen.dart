@@ -51,6 +51,16 @@ class _HospitalsScreenState extends State<HospitalsScreen> {
     });
   }
 
+  Future<void> _editHospital(HospitalModel hospital) async {
+    final updated = await context.push<bool>(
+      '/admin/edit-hospital',
+      extra: hospital,
+    );
+    if (updated == true) {
+      _fetchHospitals();
+    }
+  }
+
   Future<void> _handleDeleteHospital(int hospitalId) async {
     final confirm = await showDialog<bool>(
       context: context,
@@ -117,10 +127,9 @@ class _HospitalsScreenState extends State<HospitalsScreen> {
   Widget _buildHospitalCard(HospitalModel hospital) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      child: GestureDetector(
-        onTap: () {
-          context.push('/hospitals/${hospital.id}', extra: hospital);
-        },
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () => context.push('/hospitals/${hospital.id}', extra: hospital),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -214,9 +223,7 @@ class _HospitalsScreenState extends State<HospitalsScreen> {
                       iconSize: 20,
                       color: Colors.blueAccent,
                       icon: Icon(Icons.edit_rounded),
-                      onPressed: () {
-                        // Handle edit action
-                      },
+                      onPressed: () => _editHospital(hospital),
                     ),
                   ],
                 ),

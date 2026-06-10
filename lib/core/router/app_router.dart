@@ -22,6 +22,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/core/models/doctor_model.dart';
+import 'package:mini_project/features/admin/screens/edit_hospital_screen.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
 import 'package:mini_project/features/healthcare/screens/search_doctors_screen.dart';
@@ -106,6 +107,13 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final doctor = state.extra as DoctorModel;
         return EditDoctorScreen(doctor: doctor);
+      },
+    ),
+    GoRoute(
+      path: '/admin/edit-hospital',
+      builder: (context, state) {
+        final hospital = state.extra as HospitalModel;
+        return EditHospitalScreen(hospital: hospital);
       },
     ),
     GoRoute(

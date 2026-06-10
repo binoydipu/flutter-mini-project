@@ -179,4 +179,19 @@ class AdminService {
       return false;
     }
   }
+
+  /// Updates hospital details
+  static Future<bool> updateHospital(HospitalModel hospital) async {
+    try {
+      final data = hospital.toMap();
+      data.remove('created_at'); // Do not overwrite created_at
+      data['updated_at'] = DateTime.now().toIso8601String();
+
+      await supabase.from('hospitals').update(data).eq('id', hospital.id);
+      return true;
+    } catch (e) {
+      debugPrint('Error updating hospital: $e');
+      return false;
+    }
+  }
 }

@@ -180,6 +180,30 @@ class HealthcareService {
     }
   }
 
+  static Future<Map<String, dynamic>?> getDoctorById(int doctorId) async {
+    try {
+      final response = await supabase
+          .from('doctors')
+          .select('''
+            doctor_specialities(specialities(id, name, icon)),
+            doctor_hospitals(
+              hospital_id,
+              chamber_name,
+              room_no,
+              appointment_phone,
+              hospitals(name, area, city, address, phone)
+            )
+          ''')
+          .eq('id', doctorId)
+          .single();
+
+      return response;
+    } catch (e) {
+      debugPrint('Error fetching doctor by ID: $e');
+      return null;
+    }
+  }
+
   /// Fetches unique areas from all active hospitals
   static Future<List<String>> getUniqueAreas() async {
     try {

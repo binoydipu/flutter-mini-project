@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/features/profile/services/profile_service.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,6 +25,16 @@ class _HospitalDetailsScreenState extends State<HospitalDetailsScreen> {
     });
   }
 
+  Future<void> _editHospital(HospitalModel hospital) async {
+    final updated = await context.push<bool>(
+      '/admin/edit-hospital',
+      extra: hospital,
+    );
+    if (updated == true) {
+      if(mounted) context.pop();
+    }
+  }
+
   @override
   initState() {
     super.initState();
@@ -40,7 +51,7 @@ class _HospitalDetailsScreenState extends State<HospitalDetailsScreen> {
             IconButton(
               icon: const Icon(Icons.edit_rounded),
               onPressed: () {
-                // Handle edit action
+                _editHospital(widget.hospital);
               },
             ),
         ],

@@ -6,7 +6,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mini_project/main.dart' show supabase;
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/models/doctor_model.dart';
@@ -43,20 +42,12 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
 
   Future<void> _fetchDoctorDetails() async {
     try {
-      final response = await supabase
-          .from('doctors')
-          .select('''
-            doctor_specialities(specialities(id, name, icon)),
-            doctor_hospitals(
-              hospital_id,
-              chamber_name,
-              room_no,
-              appointment_phone,
-              hospitals(name, area, city, address, phone)
-            )
-          ''')
-          .eq('id', widget.doctor.id)
-          .single();
+      final response = await HealthcareService.getDoctorById(widget.doctor.id);
+      if (response == null) {
+        debugPrint('Doctor details not found');
+        if (mounted) setState(() => _isLoadingDetails = false);
+        return;
+      }
 
       if (mounted) {
         final specs = (response['doctor_specialities'] as List?) ?? [];
