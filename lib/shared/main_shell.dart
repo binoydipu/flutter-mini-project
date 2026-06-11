@@ -33,10 +33,10 @@ class MainShell extends StatelessWidget {
       label: 'Search',
     ),
     _TabItem(
-      path: '/appointments',
+      path: '/remainder',
       icon: Icons.calendar_today_outlined,
       activeIcon: Icons.calendar_today_rounded,
-      label: 'Appointments',
+      label: 'Reminders',
     ),
     _TabItem(
       path: '/profile',

@@ -29,6 +29,8 @@ import 'package:mini_project/features/healthcare/screens/hospital_details_screen
 import 'package:mini_project/features/healthcare/screens/nearest_hospitals_screen.dart';
 import 'package:mini_project/features/healthcare/screens/search_doctors_screen.dart';
 import 'package:mini_project/features/profile/services/profile_service.dart';
+import 'package:mini_project/features/remainder/screens/add_remainder_screen.dart';
+import 'package:mini_project/features/remainder/screens/remainder_screen.dart';
 import '../../features/auth/screens/splash_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
@@ -169,8 +171,8 @@ final GoRouter appRouter = GoRouter(
         ),
 
         GoRoute(
-          path: '/appointments',
-          builder: (context, state) => const AppointmentsScreen(),
+          path: '/remainder',
+          builder: (context, state) => const RemainderScreen(),
         ),
 
         GoRoute(
@@ -192,6 +194,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/nearest-hospitals',
       builder: (context, state) => const NearestHospitalsScreen(),
+    ),
+    GoRoute(
+      path: '/add-remainder',
+      builder: (context, state) => const AddRemainderScreen(),
     ),
   ],
 );

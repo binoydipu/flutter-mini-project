@@ -11,6 +11,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mini_project/features/remainder/services/remainder_service.dart';
+import 'package:mini_project/features/remainder/services/remainder_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
@@ -29,6 +31,14 @@ void main() async {
   // The .env file contains our Supabase URL and Anon Key.
   // We keep these in .env so they are NOT hardcoded in our source code.
   await dotenv.load(fileName: ".env");
+
+  // ── Initialize Notifications Remainder ── 
+  // This sets up our local notification service and reschedules any pending notifications.
+  final storage = RemainderStorage();
+  final service = RemainderService(storage);
+
+  await service.init();
+  await service.rescheduleAll();
 
   // ── Initialize Supabase ──
   // This connects our app to the Supabase backend.
