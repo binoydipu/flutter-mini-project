@@ -11,7 +11,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:mini_project/features/remainder/services/remainder_service.dart';
 import 'package:mini_project/features/remainder/services/remainder_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -51,9 +50,6 @@ void main() async {
 
   // ── Initialize Google Sign-In ──
   await AuthService.initializeGoogleSignIn();
-
-  // ── Initialize Gemini AI ──
-  Gemini.init(apiKey: dotenv.env['GEMINI_API_KEY']!);
 
   // ── Run the app ──
   runApp(const MyApp());
