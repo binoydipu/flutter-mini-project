@@ -39,6 +39,12 @@ class MainShell extends StatelessWidget {
       label: 'Reminders',
     ),
     _TabItem(
+      path: '/chat',
+      icon: Icons.message_outlined,
+      activeIcon: Icons.message,
+      label: 'Chat',
+    ),
+    _TabItem(
       path: '/profile',
       icon: Icons.person_outline,
       activeIcon: Icons.person,

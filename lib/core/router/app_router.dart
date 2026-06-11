@@ -23,6 +23,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/core/models/doctor_model.dart';
 import 'package:mini_project/features/admin/screens/edit_hospital_screen.dart';
+import 'package:mini_project/features/ai/screens/chat_screen.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
 import 'package:mini_project/features/healthcare/screens/emergency_screen.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
@@ -175,6 +176,11 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const RemainderScreen(),
         ),
 
+        GoRoute(
+          path: '/chat',
+          builder: (context, state) => const ChatScreen(),
+        ),
+        
         GoRoute(
           path: '/profile',
           builder: (context, state) => const ProfileScreen(),

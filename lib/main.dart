@@ -11,6 +11,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:mini_project/features/remainder/services/remainder_service.dart';
 import 'package:mini_project/features/remainder/services/remainder_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,7 +33,7 @@ void main() async {
   // We keep these in .env so they are NOT hardcoded in our source code.
   await dotenv.load(fileName: ".env");
 
-  // ── Initialize Notifications Remainder ── 
+  // ── Initialize Notifications Remainder ──
   // This sets up our local notification service and reschedules any pending notifications.
   final storage = RemainderStorage();
   final service = RemainderService(storage);
@@ -50,6 +51,9 @@ void main() async {
 
   // ── Initialize Google Sign-In ──
   await AuthService.initializeGoogleSignIn();
+
+  // ── Initialize Gemini AI ──
+  Gemini.init(apiKey: dotenv.env['GEMINI_API_KEY']!);
 
   // ── Run the app ──
   runApp(const MyApp());

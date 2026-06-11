@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkAuthAndNavigate() async {
     // Wait a moment so the splash screen is visible
     // (also gives Supabase time to restore the session)
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
 
     // Don't navigate if the widget was disposed (user left the screen)
     if (!mounted) return;
