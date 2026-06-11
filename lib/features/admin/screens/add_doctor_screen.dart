@@ -28,6 +28,8 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
   final _experienceController = TextEditingController();
   final _phoneController = TextEditingController();
   final _feeController = TextEditingController();
+  final _daysController = TextEditingController();
+  final _timeController = TextEditingController();
 
   List<HospitalModel> _hospitals = [];
   List<SpecialityModel> _specialities = [];
@@ -47,7 +49,7 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
   Future<void> _fetchData() async {
     final hospitals = await HealthcareService.getHospitals();
     final specialities = await HealthcareService.getSpecialities();
-    
+
     if (mounted) {
       setState(() {
         _hospitals = hospitals;
@@ -74,6 +76,8 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
       consultationFee: feeText.isNotEmpty ? double.tryParse(feeText) : null,
       hospitalId: _selectedHospitalId,
       specialityId: _selectedSpecialityId,
+      availableDays: _daysController.text.trim(),
+      availableTime: _timeController.text.trim(),
     );
 
     if (mounted) {
@@ -84,9 +88,9 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
         );
         context.pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to add doctor')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Failed to add doctor')));
       }
     }
   }
@@ -99,6 +103,8 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
     _experienceController.dispose();
     _phoneController.dispose();
     _feeController.dispose();
+    _daysController.dispose();
+    _timeController.dispose();
     super.dispose();
   }
 
@@ -118,17 +124,22 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
                     TextFormField(
                       controller: _nameController,
                       decoration: const InputDecoration(labelText: 'Full Name'),
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Required' : null,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _qualificationController,
-                      decoration: const InputDecoration(labelText: 'Qualification (e.g. MBBS, MD)'),
+                      decoration: const InputDecoration(
+                        labelText: 'Qualification (e.g. MBBS, MD)',
+                      ),
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _designationController,
-                      decoration: const InputDecoration(labelText: 'Designation (e.g. Senior Consultant)'),
+                      decoration: const InputDecoration(
+                        labelText: 'Designation (e.g. Senior Consultant)',
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -136,7 +147,9 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
                         Expanded(
                           child: TextFormField(
                             controller: _experienceController,
-                            decoration: const InputDecoration(labelText: 'Experience (Years)'),
+                            decoration: const InputDecoration(
+                              labelText: 'Experience (Years)',
+                            ),
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -144,7 +157,9 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
                         Expanded(
                           child: TextFormField(
                             controller: _feeController,
-                            decoration: const InputDecoration(labelText: 'Consultation Fee'),
+                            decoration: const InputDecoration(
+                              labelText: 'Consultation Fee',
+                            ),
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -153,34 +168,65 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _phoneController,
-                      decoration: const InputDecoration(labelText: 'Phone Number'),
+                      decoration: const InputDecoration(
+                        labelText: 'Phone Number',
+                      ),
                       keyboardType: TextInputType.phone,
                     ),
-                    
+
                     const SizedBox(height: 24),
                     const Text(
                       'Link to Hospital & Speciality',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<int>(
                       value: _selectedHospitalId,
-                      decoration: const InputDecoration(labelText: 'Hospital (Optional)'),
+                      decoration: const InputDecoration(
+                        labelText: 'Hospital (Optional)',
+                      ),
                       items: _hospitals.map((h) {
-                        return DropdownMenuItem(value: h.id, child: Text(h.name));
+                        return DropdownMenuItem(
+                          value: h.id,
+                          child: Text(h.name),
+                        );
                       }).toList(),
-                      onChanged: (val) => setState(() => _selectedHospitalId = val),
+                      onChanged: (val) =>
+                          setState(() => _selectedHospitalId = val),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _daysController,
+                      decoration: const InputDecoration(
+                        labelText: 'Available Days (e.g. 0,1,3,5)',
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _timeController,
+                      decoration: const InputDecoration(
+                        labelText: 'Available Time (e.g. 09:00-16:00)',
+                      ),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<int>(
                       value: _selectedSpecialityId,
-                      decoration: const InputDecoration(labelText: 'Speciality (Optional)'),
+                      decoration: const InputDecoration(
+                        labelText: 'Speciality (Optional)',
+                      ),
                       items: _specialities.map((s) {
-                        return DropdownMenuItem(value: s.id, child: Text(s.name));
+                        return DropdownMenuItem(
+                          value: s.id,
+                          child: Text(s.name),
+                        );
                       }).toList(),
-                      onChanged: (val) => setState(() => _selectedSpecialityId = val),
+                      onChanged: (val) =>
+                          setState(() => _selectedSpecialityId = val),
                     ),
-                    
+
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: _isLoading ? null : _submit,

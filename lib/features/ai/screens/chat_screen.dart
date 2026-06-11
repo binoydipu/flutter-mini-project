@@ -67,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
           return Text(
             message.text,
             style: TextStyle(
-              color: message.user.id == '0' ? Colors.black : Colors.white,
+              color: message.user.id == aiUser.id ? Colors.black : Colors.white,
             ),
           );
         },

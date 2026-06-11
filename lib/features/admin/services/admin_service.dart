@@ -20,6 +20,8 @@ class AdminService {
     double? consultationFee,
     int? hospitalId,
     int? specialityId,
+    String? availableDays,
+    String? availableTime,
   }) async {
     try {
       final userId = supabase.auth.currentUser?.id;
@@ -47,6 +49,8 @@ class AdminService {
         await supabase.from('doctor_hospitals').insert({
           'doctor_id': newDoctorId,
           'hospital_id': hospitalId,
+          'available_days': availableDays,
+          'available_time': availableTime,
         });
       }
 

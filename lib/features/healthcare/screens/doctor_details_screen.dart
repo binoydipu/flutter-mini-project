@@ -69,6 +69,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                   'chamber_name': h['chamber_name'],
                   'room_no': h['room_no'],
                   'appointment_phone': h['appointment_phone'],
+                  'available_days': h['available_days'],
+                  'available_time': h['available_time'],
                 };
               })
               .toList();
@@ -382,6 +384,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                               .map((h) => _buildHospitalTile(h))
                               .toList(),
                         ),
+
+                  _buildCard(
+                    child: const Text(
+                      'No hospital information available.',
+                      style: TextStyle(color: AppTheme.textPrimary),
+                    ),
+                  ),
+
                   const SizedBox(height: 20),
 
                   // Contact Information
@@ -552,6 +562,23 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     );
   }
 
+  String getDayNames(String availableDays) {
+    const days = [
+      'Sunday', // 0
+      'Monday', // 1
+      'Tuesday', // 2
+      'Wednesday', // 3
+      'Thursday', // 4
+      'Friday', // 5
+      'Saturday', // 6
+    ];
+
+    return availableDays
+        .split(',')
+        .map((e) => days[int.parse(e.trim())])
+        .join(', ');
+  }
+
   Widget _buildHospitalTile(Map<String, dynamic> h) {
     final name = h['name'] as String? ?? 'Unknown Hospital';
     final area = h['area'] as String?;
@@ -559,6 +586,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     final chamberName = h['chamber_name'] as String?;
     final roomNo = h['room_no'] as String?;
     final appointmentPhone = h['appointment_phone'] as String?;
+    final availableDays = h['available_days'] as String?;
+    final availableTime = h['available_time'] as String?;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -624,6 +653,22 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 if (roomNo != null && roomNo.isNotEmpty)
                   Text(
                     'Room: $roomNo',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
+                if (availableDays != null)
+                  Text(
+                    'Days: ${getDayNames(availableDays)}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
+                if (availableTime != null)
+                  Text(
+                    'Time: $availableTime',
                     style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.textSecondary,

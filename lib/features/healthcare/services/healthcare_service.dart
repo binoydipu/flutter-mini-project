@@ -191,6 +191,8 @@ class HealthcareService {
               chamber_name,
               room_no,
               appointment_phone,
+              available_days,
+              available_time,
               hospitals(name, area, city, address, phone)
             )
           ''')
