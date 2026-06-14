@@ -32,14 +32,6 @@ void main() async {
   // We keep these in .env so they are NOT hardcoded in our source code.
   await dotenv.load(fileName: ".env");
 
-  // ── Initialize Notifications Remainder ──
-  // This sets up our local notification service and reschedules any pending notifications.
-  final storage = RemainderStorage();
-  final service = RemainderService(storage);
-
-  await service.init();
-  await service.rescheduleAll();
-
   // ── Initialize Supabase ──
   // This connects our app to the Supabase backend.
   // We read the URL and key from the .env file.
@@ -50,6 +42,16 @@ void main() async {
 
   // ── Initialize Google Sign-In ──
   await AuthService.initializeGoogleSignIn();
+
+  final userId = Supabase.instance.client.auth.currentUser!.id;
+
+  // ── Initialize Notifications Remainder ──
+  // This sets up our local notification service and reschedules any pending notifications.
+  final storage = RemainderStorage(userId: userId);
+  final service = RemainderService(storage);
+
+  await service.init();
+  await service.rescheduleAll();
 
   // ── Run the app ──
   runApp(const MyApp());

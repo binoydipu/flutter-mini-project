@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RemainderStorage {
-  static const _key = 'scheduled_remainders';
-  static const _idKey = 'remainder_id_counter';
-  
+  final String userId;
+
+  RemainderStorage({required this.userId});
+
+  String get _key => 'scheduled_remainders_$userId';
+  String get _idKey => 'remainder_id_counter_$userId';
+
   Future<void> save(RemainderPayload payload) async {
     final prefs = await SharedPreferences.getInstance();
     final all = await loadAll();
@@ -60,13 +64,13 @@ class RemainderPayload {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'body': body,
-        'scheduledTime': scheduledTime.toIso8601String(),
-        'repeat': repeat?.name,
-        'isActive': isActive,
-      };
+    'id': id,
+    'title': title,
+    'body': body,
+    'scheduledTime': scheduledTime.toIso8601String(),
+    'repeat': repeat?.name,
+    'isActive': isActive,
+  };
 
   factory RemainderPayload.fromJson(Map<String, dynamic> json) =>
       RemainderPayload(
@@ -81,23 +85,23 @@ class RemainderPayload {
       );
 
   RemainderPayload copyWith({bool? isActive}) => RemainderPayload(
-        id: id,
-        title: title,
-        body: body,
-        scheduledTime: scheduledTime,
-        repeat: repeat,
-        isActive: isActive ?? this.isActive,
-      );
+    id: id,
+    title: title,
+    body: body,
+    scheduledTime: scheduledTime,
+    repeat: repeat,
+    isActive: isActive ?? this.isActive,
+  );
 
   // Resolve to a concrete id before saving
   RemainderPayload withId(int resolvedId) => RemainderPayload(
-        id: resolvedId,
-        title: title,
-        body: body,
-        scheduledTime: scheduledTime,
-        repeat: repeat,
-        isActive: isActive,
-      );
+    id: resolvedId,
+    title: title,
+    body: body,
+    scheduledTime: scheduledTime,
+    repeat: repeat,
+    isActive: isActive,
+  );
 }
 
 enum AppRepeatInterval { daily, weekly, monthly }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mini_project/features/remainder/services/remainder_service.dart';
 import 'package:mini_project/features/remainder/services/remainder_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RemainderScreen extends StatefulWidget {
   const RemainderScreen({super.key});
@@ -17,7 +18,8 @@ class _RemainderScreenState extends State<RemainderScreen> {
   @override
   void initState() {
     super.initState();
-    _service = RemainderService(RemainderStorage());
+    final userId = Supabase.instance.client.auth.currentUser!.id;
+    _service = RemainderService(RemainderStorage(userId: userId));
     _scheduledFuture = _service.getAllScheduled();
   }
 
@@ -51,8 +53,7 @@ class _RemainderScreenState extends State<RemainderScreen> {
         false;
 
     if (confirmed) {
-      final service = RemainderService(RemainderStorage());
-      await service.cancel(id);
+      await _service.cancel(id);
       _refreshScheduled();
       if (context.mounted) {
         ScaffoldMessenger.of(
