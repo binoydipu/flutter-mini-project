@@ -79,3 +79,12 @@ String? validateName(String? value) {
 
   return null; // Valid!
 }
+
+String? validateOtp(String? value) {
+  // Check if empty
+  if (value == null || value.trim().isEmpty) {
+    return 'Please enter your otp';
+  }
+
+  return null; // Valid!
+}

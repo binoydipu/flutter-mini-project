@@ -43,15 +43,17 @@ void main() async {
   // ── Initialize Google Sign-In ──
   await AuthService.initializeGoogleSignIn();
 
-  final userId = Supabase.instance.client.auth.currentUser!.id;
+  final String? userId = Supabase.instance.client.auth.currentUser?.id;
 
   // ── Initialize Notifications Remainder ──
   // This sets up our local notification service and reschedules any pending notifications.
-  final storage = RemainderStorage(userId: userId);
-  final service = RemainderService(storage);
+  if (userId != null) {
+    final storage = RemainderStorage(userId: userId);
+    final service = RemainderService(storage);
 
-  await service.init();
-  await service.rescheduleAll();
+    await service.init();
+    await service.rescheduleAll();
+  }
 
   // ── Run the app ──
   runApp(const MyApp());

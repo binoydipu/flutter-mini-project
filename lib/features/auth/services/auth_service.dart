@@ -113,6 +113,31 @@ class AuthService {
     );
   }
 
+  static Future<void> sendOtpSignInEmail({required String email}) async {
+    await supabase.auth.signInWithOtp(email: email);
+  }
+
+  /// Login user through OTP
+  static Future<AuthResponse> verifyOTP({
+    required String email,
+    required String otp,
+  }) async {
+    final response = await supabase.auth.verifyOTP(
+      email: email,
+      token: otp,
+      type: OtpType.email,
+    );
+
+    return response;
+  }
+
+  static Future<UserResponse> updatePassword({required String newPassword}) async {
+    final response = await supabase.auth.updateUser(
+      UserAttributes(password: newPassword),
+    );
+    return response;
+  }
+
   // ──────────────────────────────────────────────
   // GOOGLE OAUTH SIGN IN
   // ──────────────────────────────────────────────

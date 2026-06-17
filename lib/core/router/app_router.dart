@@ -24,6 +24,8 @@ import 'package:mini_project/core/models/hospital_model.dart';
 import 'package:mini_project/core/models/doctor_model.dart';
 import 'package:mini_project/features/admin/screens/edit_hospital_screen.dart';
 import 'package:mini_project/features/ai/screens/chat_screen.dart';
+import 'package:mini_project/features/auth/screens/forgot_password_screen.dart';
+import 'package:mini_project/features/auth/screens/reset_password_screen.dart';
 import 'package:mini_project/features/auth/services/auth_service.dart';
 import 'package:mini_project/features/healthcare/screens/emergency_screen.dart';
 import 'package:mini_project/features/healthcare/screens/hospital_details_screen.dart';
@@ -36,7 +38,6 @@ import '../../features/auth/screens/splash_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/home/screens/home_screen.dart';
-import '../../features/home/screens/appointments_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/update_profile_screen.dart';
 import '../../features/admin/screens/admin_dashboard_screen.dart';
@@ -62,7 +63,11 @@ final GoRouter appRouter = GoRouter(
     final loc = state.uri.toString();
 
     bool isLoggedIn = AuthService.isLoggedIn();
-    final isAuthRoute = loc == '/login' || loc == '/register';
+    final isAuthRoute =
+        loc == '/login' ||
+        loc == '/register' ||
+        loc == '/forgot-password' ||
+        loc == '/reset-password';
     final isAdminRoute = loc.startsWith('/admin');
 
     if (!isLoggedIn && !isAuthRoute) return '/login';
@@ -90,6 +95,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
+    ),
+
+    GoRoute(
+      path: '/forgot-password',
+      builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: '/reset-password',
+      builder: (context, state) {
+        final email = state.extra as String;
+        return ResetPasswordScreen(email: email);
+      },
     ),
 
     // ── Admin Routes ──
@@ -176,11 +193,8 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const RemainderScreen(),
         ),
 
-        GoRoute(
-          path: '/chat',
-          builder: (context, state) => const ChatScreen(),
-        ),
-        
+        GoRoute(path: '/chat', builder: (context, state) => const ChatScreen()),
+
         GoRoute(
           path: '/profile',
           builder: (context, state) => const ProfileScreen(),

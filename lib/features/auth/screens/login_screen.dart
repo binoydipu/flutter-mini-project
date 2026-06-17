@@ -15,6 +15,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mini_project/features/profile/services/profile_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_theme.dart';
@@ -76,6 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Step 4: Navigate to the main app on success
       if (mounted) context.go('/home');
+    } on AuthApiException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message.toString()),
+            backgroundColor: AppTheme.errorColor,
+          ),
+        );
+      }
     } catch (e) {
       // Step 5: Show error message if login fails
       if (mounted) {
@@ -126,6 +136,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Navigate to the main app
       if (mounted) context.go('/home');
+    } on AuthApiException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message.toString()),
+            backgroundColor: AppTheme.errorColor,
+          ),
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -219,6 +238,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   GoogleSignInButton(
                     onPressed: _handleGoogleSignIn,
                     isLoading: _isGoogleLoading,
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextButton(
+                    onPressed: () => context.push('/forgot-password'),
+                    child: Text('Forgot Password'),
                   ),
                   const SizedBox(height: 24),
 
